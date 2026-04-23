@@ -40,7 +40,7 @@ def make_id(title: str, org: str) -> str:
 def fetch_opportunities() -> list[dict]:
     """فراخوان‌ها را از ArtConnect دریافت می‌کند."""
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-haiku-4-5-20251001",
         max_tokens=4000,
         tools=[{"type": "web_search_20250305", "name": "web_search"}],
         system="""You are a data extraction assistant.
@@ -71,8 +71,9 @@ Return ONLY valid JSON array, no markdown, no explanation.""",
 
 def translate_opportunity(op: dict) -> dict:
     """یک فراخوان را به فارسی ترجمه می‌کند."""
+    time.sleep(10)  # جلوگیری از rate limit
     response = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-haiku-4-5-20251001",
         max_tokens=800,
         system="""You are a professional Persian translator for art and culture.
 Translate the given opportunity JSON to Persian.
@@ -160,7 +161,7 @@ def run_job():
             send_to_telegram(message)
             seen.add(op_id)
             new_count += 1
-            time.sleep(3)  # جلوگیری از spam
+            time.sleep(15)  # جلوگیری از spam
         except Exception as e:
             print(f"⚠️ خطا در پردازش '{op.get('title')}': {e}")
             continue
