@@ -117,7 +117,7 @@ Important: org should be the actual organizer, not ArtConnect.""",
 
 def translate_and_personalize(op: dict) -> dict:
     """ترجمه و شخصی‌سازی فارسی."""
-    time.sleep(6)
+    time.sleep(15)
     response = client.messages.create(
         model="claude-haiku-4-5-20251001",
         max_tokens=800,
@@ -198,7 +198,7 @@ def run_job():
             seen.add(op_id)
             new_count += 1
             save_seen(seen)
-            time.sleep(15)
+            time.sleep(25)
         except Exception as e:
             print(f"خطا در '{op.get('title', '')}': {e}")
             continue
